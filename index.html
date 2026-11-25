@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090d16">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Орёл или Решка">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Орёл или Решка</title>
+<style>
+:root{color-scheme:dark;--gold:#f6d77a;--muted:#9aa5b8}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;background:radial-gradient(ellipse at 50% 38%,#202b42 0%,#101827 45%,#080c14 100%);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:flex;justify-content:center;overflow:hidden}
+.app{width:min(100%,520px);min-height:100svh;padding:calc(env(safe-area-inset-top) + 24px) 22px calc(env(safe-area-inset-bottom) + 20px);display:flex;flex-direction:column;align-items:center}
+h1{font-size:clamp(25px,7vw,34px);letter-spacing:.11em;margin:8px 0 6px;text-align:center;font-weight:850}
+.subtitle{color:var(--muted);font-size:14px;text-align:center;margin:0}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;width:100%;min-height:330px;perspective:1100px}
+.coin-wrap{width:min(76vw,330px);aspect-ratio:1;position:relative;filter:drop-shadow(0 24px 28px #0009)}
+.coin{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1.55s cubic-bezier(.16,.78,.18,1)}
+.coin.spinning{transition:transform 1.55s cubic-bezier(.16,.78,.18,1)}
+.face{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;display:grid;place-items:center;border:9px solid #a76b16;background:radial-gradient(circle at 35% 25%,#fff2b3 0%,#f4d36d 18%,#c58a2b 56%,#805018 100%);box-shadow:inset 0 0 0 5px #ffe9a0,inset 0 0 0 9px #9c641e,inset 0 9px 18px #fff8, inset 0 -14px 20px #68400c}
+.face:before{content:"";position:absolute;inset:13px;border-radius:50%;border:2px solid #ffedac;box-shadow:0 0 0 3px #9b641e}
+.face svg{width:66%;height:66%;filter:drop-shadow(0 3px 1px #7b4a0c)}
+.back{transform:rotateY(180deg)}
+.face-label{position:absolute;bottom:13%;font-weight:900;letter-spacing:.18em;font-size:clamp(12px,3.5vw,16px);color:#70430c;text-shadow:0 1px #ffe9a0}
+.coin-shadow{position:absolute;bottom:-9%;left:12%;width:76%;height:14%;background:#0008;filter:blur(17px);border-radius:50%}
+.result{min-height:52px;text-align:center;font-size:clamp(25px,7vw,34px);font-weight:900;letter-spacing:.05em;color:var(--gold);margin:0 0 8px}
+.hint{color:var(--muted);font-size:13px;text-align:center;margin:0 0 18px}
+button{border:0;border-radius:18px;padding:18px 28px;width:100%;max-width:340px;background:linear-gradient(135deg,#ffe9a1,#d79a35 58%,#a96b1b);color:#261707;font-size:17px;font-weight:900;letter-spacing:.08em;box-shadow:0 9px 25px #0006,inset 0 1px #fff9;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:active{transform:scale(.98)}
+button:disabled{opacity:.7}
+.stats{display:flex;gap:12px;width:100%;max-width:340px;margin-top:24px}
+.stat{flex:1;text-align:center;background:#ffffff0b;border:1px solid #ffffff16;border-radius:16px;padding:12px 8px}
+.stat strong{display:block;font-size:23px;color:#f5d47b}
+.stat span{font-size:12px;color:var(--muted)}
+.footer{display:flex;gap:20px;margin-top:15px}
+.small{background:none;color:var(--muted);font-size:12px;font-weight:600;letter-spacing:0;padding:8px;width:auto;box-shadow:none}
+@media(prefers-reduced-motion:reduce){.coin{transition:none}}
+</style>
+</head>
+<body>
+<main class="app">
+  <h1>ОРЁЛ ИЛИ РЕШКА</h1>
+  <p class="subtitle">Доверь решение монетке</p>
+  <section class="stage" aria-label="Монета">
+    <div class="coin-wrap">
+      <div class="coin" id="coin">
+        <div class="face front" aria-label="Орёл">
+          <svg viewBox="0 0 200 200" role="img" aria-label="Орёл">
+            <path fill="#815018" d="M43 126c18-9 26-23 34-42 9-22 30-39 62-37-9 7-14 15-17 23 17-5 31-2 43 8-17 1-27 7-34 16 13 1 23 8 29 19-20-7-36-6-49 3-14 10-26 19-47 19l-8 18-14-2 9-25-8 0z"/>
+            <path fill="#f6df9b" d="M95 80c10-11 25-18 43-17-13 6-21 14-27 25-8 15-22 23-42 24 11-8 18-18 26-32z"/>
+            <path fill="#815018" d="M145 73l23 4-19 12zM73 132l-5 23 13-3 7-20z"/>
+            <circle cx="126" cy="68" r="3.8" fill="#2b1a08"/>
+            <path d="M51 48c27-20 68-27 104-9M39 65c34-25 83-34 124-15" fill="none" stroke="#ffe9a0" stroke-width="3" stroke-linecap="round" opacity=".75"/>
+          </svg>
+          <span class="face-label">ОРЁЛ</span>
+        </div>
+        <div class="face back" aria-label="Решка">
+          <svg viewBox="0 0 200 200" role="img" aria-label="Решка">
+            <circle cx="100" cy="91" r="48" fill="none" stroke="#815018" stroke-width="9"/>
+            <circle cx="100" cy="91" r="34" fill="none" stroke="#815018" stroke-width="4"/>
+            <path d="M100 50v82M59 91h82M71 62l58 58M129 62l-58 58" stroke="#815018" stroke-width="5" stroke-linecap="round"/>
+            <path d="M100 24l8 14h-16zM100 158l-8-14h16zM33 91l14-8v16zM167 91l-14 8V83z" fill="#815018"/>
+            <path d="M52 154h96" stroke="#815018" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+          <span class="face-label">РЕШКА</span>
+        </div>
+      </div>
+      <div class="coin-shadow"></div>
+    </div>
+  </section>
+  <div class="result" id="result" aria-live="polite">ТВОЙ ХОД</div>
+  <p class="hint" id="hint">Нажми кнопку — монета сделает бросок</p>
+  <button id="flip">БРОСИТЬ МОНЕТУ</button>
+  <div class="stats">
+    <div class="stat"><strong id="heads">0</strong><span>Орёл</span></div>
+    <div class="stat"><strong id="tails">0</strong><span>Решка</span></div>
+    <div class="stat"><strong id="total">0</strong><span>Всего бросков</span></div>
+  </div>
+  <div class="footer"><button class="small" id="reset">Сбросить статистику</button></div>
+</main>
+<script>
+const coin=document.getElementById('coin'), flip=document.getElementById('flip');
+const result=document.getElementById('result'),hint=document.getElementById('hint');
+const headsEl=document.getElementById('heads'),tailsEl=document.getElementById('tails'),totalEl=document.getElementById('total');
+let heads=0,tails=0,total=0,rotation=0,busy=false;
+let audio;
+function sound(){
+  try{
+    audio=audio||new(window.AudioContext||window.webkitAudioContext)();
+    if(audio.state==='suspended') audio.resume();
+    const now=audio.currentTime;
+    [0,.13,.27,.43,.61,.79].forEach((t,i)=>{
+      const osc=audio.createOscillator(),gain=audio.createGain();
+      osc.type='triangle';osc.frequency.setValueAtTime(720-i*65,now+t);
+      osc.frequency.exponentialRampToValueAtTime(190,now+t+.09);
+      gain.gain.setValueAtTime(.0001,now+t);gain.gain.exponentialRampToValueAtTime(.12,now+t+.012);
+      gain.gain.exponentialRampToValueAtTime(.0001,now+t+.11);
+      osc.connect(gain);gain.connect(audio.destination);osc.start(now+t);osc.stop(now+t+.12);
+    });
+  }catch(e){}
+}
+function render(){headsEl.textContent=heads;tailsEl.textContent=tails;totalEl.textContent=total;}
+flip.addEventListener('click',()=>{
+  if(busy)return;
+  busy=true;flip.disabled=true;result.textContent='';hint.textContent='Монета в воздухе…';sound();
+  const isHeads=Math.random()<.5;
+  rotation+=Math.ceil(rotation/360)*360;
+  const current=((rotation%360)+360)%360;
+  rotation+=(360-current);
+  rotation+=isHeads?1800:1980;
+  coin.style.transform=`rotateY(${rotation}deg)`;
+  setTimeout(()=>{
+    if(isHeads){heads++;result.textContent='ОРЁЛ!';}else{tails++;result.textContent='РЕШКА!';}
+    total++;render();hint.textContent='Хочешь попробовать ещё раз?';
+    flip.disabled=false;busy=false;
+  },1580);
+});
+document.getElementById('reset').addEventListener('click',()=>{
+  heads=0;tails=0;total=0;render();result.textContent='ТВОЙ ХОД';hint.textContent='Статистика обнулена';
+});
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+</script>
+</body>
+</html>
